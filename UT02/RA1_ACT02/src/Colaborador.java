@@ -35,4 +35,4 @@ public class Colaborador extends NumRandom {
 
     }
 
-}
+} //BY ALBA MUÑOZ MIÑANO
