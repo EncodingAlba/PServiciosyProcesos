@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Descripción: Tarea para trabajar con concurrencia, hilos y sincronización
  * @author Alba
@@ -36,5 +38,24 @@ public class Buffer {
         System.out.println("Cliente extrajo: " + value);
         notifyAll();
         return value;
+    }
+
+    //getters y setters
+
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
