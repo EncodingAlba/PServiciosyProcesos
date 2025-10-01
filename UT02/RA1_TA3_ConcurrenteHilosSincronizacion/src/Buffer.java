@@ -1,61 +1,51 @@
-import java.util.Arrays;
-
 /**
- * Descripción: Tarea para trabajar con concurrencia, hilos y sincronización
- * @author Alba
- * @version 1.0
- * @since 30.09.2025
+ * Clase que representa un buffer compartido entre hilos.
+ * Implementa métodos sincronizados para añadir y extraer elementos,
+ * asegurando que los hilos esperen cuando el buffer esté lleno o vacío.
  */
 
 public class Buffer {
+    private int[] buffer;
+    private int count = 0;
+    private int size;
 
-    private int[] buffer; //declaramos que el buffer es un array de números enteros
-    private int count = 0; //número de elementos q contiene el buffer
-    private int size; //tamaño del buffer
-
+    /**
+     * Constructor de Buffer.
+     * @param size tamaño máximo del buffer
+     */
     public Buffer(int size) {
         this.size = size;
         buffer = new int[size];
     }
-
-    //Método sincronizado para añadir un elemento por el suministrador
+    /**
+     * Añade un valor al buffer. Si el buffer está lleno, espera hasta que haya espacio.
+     * @param value el valor a añadir al buffer
+     * @throws InterruptedException si el hilo es interrumpido mientras espera
+     */
     public synchronized void add(int value) throws InterruptedException {
         while (count == size) {
-            wait(); //esperar porque el buffer está lleno
+            wait();
         }
-        buffer[count] = value; //añade un nuevo valor al buffer
+        buffer[count] = value;
         count++;
+        System.out.println("Suministrador añadió: " + value);
         notifyAll();
     }
 
-    //Método sincronizado para extraer un elemento por el cliente
-    //Solo extrae el último, es cómo una pila.
+    /**
+     * Extrae un valor del buffer. Si el buffer está vacío, espera hasta que haya elementos.
+     * Extrae el último elemento añadido (comportamiento tipo pila).
+     *
+     * @return el valor extraído del buffer
+     * @throws InterruptedException si el hilo es interrumpido mientras espera
+     */
     public synchronized int remove() throws InterruptedException {
         while (count == 0) {
             wait();
         }
-        int value = buffer[count--];
+        int value = buffer[--count];
         System.out.println("Cliente extrajo: " + value);
         notifyAll();
         return value;
-    }
-
-    //getters y setters
-
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 }
