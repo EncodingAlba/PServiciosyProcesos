@@ -2,6 +2,8 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+//BY:ALBA MUÑOZ MIÑANO
+
 public class ListNetworkInterfacesPartA {
     public static void main(String[] args) {
 
@@ -28,7 +30,7 @@ public class ListNetworkInterfacesPartA {
                 boolean activa = networkInterface.isUp();
 
                 //Generamos mensaje
-                System.out.println("Interfaz: " + name + ". Descripción: " + displayName + ". ¿Está activa? " + activa);
+                System.out.println("Interfaz: " + name + ". Descripción: " + displayName + ". ¿Está activa? " + (activa ? "si" : "no"));
             }
 
         } catch (SocketException e) {
